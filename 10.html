@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>25-Image Carousel with Spin & Popout</title>
+  <style>
+    body {
+      margin: 0;
+      background: #111;
+      color: #fff;
+      font-family: sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    h2 {
+      margin-bottom: 20px;
+      z-index: 1;
+    }
+
+    .carousel {
+      position: relative;
+      margin-top: 20%;
+      width: 400px;
+      height: 400px;
+      transform-style: preserve-3d;
+      transform: perspective(1600px) rotateY(0deg);
+      transition: transform 5s ease-out;
+      z-index: 1;
+    }
+
+    .item {
+      position: absolute;
+      width: 100px;
+      height: 100px;
+      transform: rotateY(calc((var(--i) - 1) * (360 / 25) * 1deg)) translateZ(500px);
+    }
+
+    .item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+      transition: transform 0.3s;
+    }
+
+    .highlight img {
+      transform: scale(1.2);
+      box-shadow: 0 0 20px rgba(255, 255, 0, 0.8);
+      z-index: 10;
+    }
+
+    button {
+      margin-top: 30px;
+      padding: 10px 20px;
+      font-size: 16px;
+      background: #ff9800;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      color: #fff;
+      transition: background 0.3s;
+      z-index: 1;
+    }
+
+    button:hover {
+      background: #e68900;
+    }
+
+    #overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.9);
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      text-align: center;
+      padding: 20px;
+    }
+
+    #overlay img {
+      max-width: 90%;
+      max-height: 70%;
+      border-radius: 12px;
+      box-shadow: 0 0 30px rgba(255, 255, 255, 0.6);
+      animation: zoomIn 0.5s ease-out;
+    }
+
+    #question {
+      margin-top: 20px;
+      font-size: 1.2em;
+      color: #facc15;
+      animation: fadeIn 1s ease-out;
+    }
+
+    @keyframes zoomIn {
+      from { transform: scale(0.5); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    #bg-video {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      min-width: 100%;
+      min-height: 100%;
+      width: auto;
+      height: auto;
+      z-index: -1;
+      transform: translate(-50%, -50%);
+      object-fit: cover;
+    }
+  </style>
+</head>
+<body>
+  <video id="bg-video" autoplay muted loop>
+    <source src="images/background video effect.mp4" type="video/mp4">
+  </video>
+
+  <h2>🎠 Yahoo! 🎯 </h2>
+
+  <div class="carousel" id="carousel">
+    <!-- 25 images -->
+    <div class="item" style="--i:1"><img src="images/akhil-akkineni" alt=""></div>
+    <div class="item" style="--i:2"><img src="images/allu arjun.webp" alt=""></div>
+    <div class="item" style="--i:3"><img src="images/bala krishna" alt=""></div>
+    <div class="item" style="--i:4"><img src="images/chiranjeevi" alt=""></div>
+    <div class="item" style="--i:5"><img src="images/dhanush" alt=""></div>
+    <div class="item" style="--i:6"><img src="images/jr-ntr.jpg" alt=""></div>
+    <div class="item" style="--i:7"><img src="images/kalayan ram" alt=""></div>
+    <div class="item" style="--i:8"><img src="images/Kamal-Hassan.jpg" alt=""></div>
+    <div class="item" style="--i:9"><img src="images/karthik" alt=""></div>
+    <div class="item" style="--i:10"><img src="images/mahesh babu" alt=""></div>
+    <div class="item" style="--i:11"><img src="images/naga chaitanya" alt=""></div>
+    <div class="item" style="--i:12"><img src="images/nagarjuna" alt=""></div>
+    <div class="item" style="--i:13"><img src="images/nani" alt=""></div>
+    <div class="item" style="--i:14"><img src="images/nitin" alt=""></div>
+    <div class="item" style="--i:15"><img src="images/pawan kalyan" alt=""></div>
+    <div class="item" style="--i:16"><img src="images/prabhas" alt=""></div>
+    <div class="item" style="--i:17"><img src="images/Rajinikanth2-1.jpg" alt=""></div>
+    <div class="item" style="--i:18"><img src="images/Ram pothineni" alt=""></div>
+    <div class="item" style="--i:19"><img src="images/ramcharan.webp" alt=""></div>
+    <div class="item" style="--i:20"><img src="images/ravi teja" alt=""></div>
+    <div class="item" style="--i:21"><img src="images/surya" alt=""></div>
+    <div class="item" style="--i:22"><img src="images/thalapathy vijay.jpg" alt=""></div>
+    <div class="item" style="--i:23"><img src="images/venkatesh" alt=""></div>
+    <div class="item" style="--i:24"><img src="images/vijay devarakonda" alt=""></div>
+    <div class="item" style="--i:25"><img src="images/sharwanad.webp" alt=""></div>
+  </div>
+
+  <button onclick="spinCarousel()">🎯 Spin</button>
+
+  <div id="overlay">
+    <img id="overlay-img" src="" alt="Selected Image">
+    <div id="question"></div>
+  </div>
+
+  <script>
+    const questions = [
+      "What is Akhil Akkineni's debut film?",
+      "Which dance move is Allu Arjun famous for?",
+      "What political role does Bala Krishna hold?",
+      "Which movie made Chiranjeevi a megastar?",
+      "What genre does Dhanush often act in?",
+      "Which blockbuster starred Jr. NTR and Ram Charan?",
+      "What is Kalyan Ram's production company called?",
+      "Which film did Kamal Hassan direct and star in?",
+      "What is Karthik's most iconic romantic role?",
+      "Which brand does Mahesh Babu endorse?",
+      "Who is Naga Chaitanya's famous father?",
+      "Which reality show did Nagarjuna host?",
+      "What makes Nani's acting style unique?",
+      "Which movie was Nitin's breakthrough?",
+      "What is Pawan Kalyan's political party?",
+      "Which Baahubali role did Prabhas play?",
+      "What is Rajinikanth's signature dialogue?",
+      "Which film made Ram Pothineni a youth icon?",
+      "What is Ram Charan's role in RRR?",
+      "Which comedy film starred Ravi Teja?",
+      "What is Surya's most acclaimed performance?",
+      "Which movie gave Thalapathy Vijay mass appeal?",
+      "What is Venkatesh's nickname in Tollywood?",
+      "Which role made Vijay Devarakonda famous?",
+            "What is Sharwanand's most emotional role?"
+    ];
+
+    function spinCarousel() {
+      const carousel = document.getElementById('carousel');
+      const items = carousel.querySelectorAll('.item');
+      const overlay = document.getElementById('overlay');
+      const overlayImg = document.getElementById('overlay-img');
+      const questionBox = document.getElementById('question');
+
+      items.forEach(item => item.classList.remove('highlight'));
+
+      const spins = Math.floor(Math.random() * 100) + 5;
+      const stopIndex = Math.floor(Math.random() * items.length);
+      const anglePerItem = 360 / items.length;
+      const finalAngle = spins * 360 + stopIndex * anglePerItem;
+
+      carousel.style.transition = 'transform 5s ease-out';
+      carousel.style.transform = `perspective(1600px) rotateY(-${finalAngle}deg)`;
+
+      setTimeout(() => {
+        const selectedItem = items[stopIndex];
+        selectedItem.classList.add('highlight');
+
+        const imgSrc = selectedItem.querySelector('img').src;
+        overlayImg.src = imgSrc;
+        questionBox.textContent = questions[stopIndex];
+        overlay.style.display = 'flex';
+      }, 5000);
+    }
+
+    document.getElementById('overlay').addEventListener('click', () => {
+      document.getElementById('overlay').style.display = 'none';
+    });
+  </script>
+</body>
+</html>
